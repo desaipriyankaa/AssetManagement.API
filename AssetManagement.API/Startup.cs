@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,8 +25,13 @@ namespace AssetManagement.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddControllers();
+            
             services.AddMvc(options => options.EnableEndpointRouting = false);
+            //services.AddMvc().AddMvcOptions(o =>
+            //{
+            //    o.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
+            //});
+                
 
         }
 
@@ -40,18 +46,11 @@ namespace AssetManagement.API
             {
                 app.UseExceptionHandler();
             }
+
+            app.UseStatusCodePages();
+
             app.UseMvc();
 
-
-            //app.UseRouting();
-
-            //app.UseAuthorization();
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllers();
-            //});
-            
         }
     }
 }

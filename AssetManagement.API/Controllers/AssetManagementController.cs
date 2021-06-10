@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Start.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,22 +11,91 @@ namespace AssetManagement.API.Controllers
     [Route("api/assets")]
     public class AssetManagementController : ControllerBase
     {
+        string filepath = @"F:\PProject\API\AssetManagement\AssetManagement.API\Controllers\Matrix.txt";
+
+        CsvReader reader;
+        public List<Asset> AssetList { get; set; }
+
+        public AssetManagementController()
+        {
+            reader = new CsvReader(filepath);
+            AssetList = reader.GetAssetsFromFile();
+        }
+
+       
         [HttpGet]
-        public JsonResult GetAssets()
+        public IActionResult GetAssets()
         {
-            return new JsonResult(AssetDataStore.Current.assets);
+            //return Ok(AssetList.Current.assets);
+            return Ok(AssetList);
+        }
+        
+        [HttpGet("MachineType/{mType}")]
+        public IActionResult GetMachineType(string mType)
+        {
+            //var MachineToReturn = AssetDataStore.Current.assets.Where(x => x.MachineType == mType).ToList();
+            var MachineToReturn = AssetList.Where(x => x.MachineType == mType).ToList();
+
+            if (MachineToReturn == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(MachineToReturn);
+           
         }
 
-        [HttpGet("{mType}")]
-        public JsonResult GetMachineType(string mType)
+        [HttpGet("AssetName/{aName}")]
+        public IActionResult GetAssetName(string aName)
         {
-            return new JsonResult(AssetDataStore.Current.assets.Where(x => x.MachineType == mType).ToList());
+            //var AssetToReturn = AssetDataStore.Current.assets.Where(x => x.AssetName == aName).ToList();
+            var AssetToReturn = AssetList.Where(x => x.AssetName == aName).ToList();
+            
+            if (AssetToReturn == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(AssetToReturn);
+
         }
 
-        [HttpGet("{aName}")]
-        public JsonResult GetAssetName(string aName)
+
+        [HttpGet("LatestSeries")]
+        public IActionResult getLatestSeries()
         {
-            return new JsonResult(AssetDataStore.Current.assets.Where(x => x.AssetName == aName).ToList());
+            var result = new List<string>();
+            // Find out all latest asset
+
+            var newSeries = AssetList.OrderByDescending(x => x.SeriesName).
+                ThenBy(x => x.AssetName).
+                GroupBy(x => x.AssetName).
+                Select(g => g.First()).ToList();
+
+
+            // remaining old series
+
+            var remain_old_assets = AssetList.Except(newSeries).ToList();
+
+
+
+            // compare between newSeries and remain_old_assets, if in old asset we found seies name 
+            // that series name we'll exclude and we'll get asset that is using all latest series
+
+            var remain_old_assets_MachineType = remain_old_assets.Select(a => a.MachineType).ToList();
+            var newSeies_MachineType = newSeries.Select(a => a.MachineType).ToList();
+
+            foreach (var item in newSeies_MachineType)
+            {
+                if (remain_old_assets_MachineType.Contains(item))
+                {
+                    continue;
+                }
+
+                result.Add(item);
+            }
+            return Ok(result.ToHashSet());
         }
+    
     }
 }

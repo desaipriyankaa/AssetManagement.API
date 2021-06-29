@@ -31,8 +31,17 @@ namespace AssetManagement.API
             //{
             //    o.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
             //});
-                
 
+            services.AddSwaggerGen(setupAction =>
+            {
+                setupAction.SwaggerDoc(
+                    "AssetManagementOpenApiSpecification",
+                    new Microsoft.OpenApi.Models.OpenApiInfo()
+                    {
+                        Title = "AssetManagement API",
+                        Version = "1"
+                    }); ;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +55,16 @@ namespace AssetManagement.API
             {
                 app.UseExceptionHandler();
             }
+
+            app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(setupAction =>
+            {
+                setupAction.SwaggerEndpoint("/swagger/AssetManagementOpenApiSpecification/swagger.json",
+                    "AssetManagement API");
+            });
 
             app.UseStatusCodePages();
 

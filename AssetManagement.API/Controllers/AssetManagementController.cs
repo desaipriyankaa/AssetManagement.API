@@ -26,14 +26,12 @@ namespace AssetManagement.API.Controllers
         [HttpGet]
         public IActionResult GetAssets()
         {
-            //return Ok(AssetList.Current.assets);
             return Ok(AssetList);
         }
         
         [HttpGet("MachineType/{mType}")]
-        public IActionResult GetMachineType(string mType)
-        {
-            //var MachineToReturn = AssetDataStore.Current.assets.Where(x => x.MachineType == mType).ToList();
+        public IActionResult GetAssetInfo (string mType)
+        {           
             var MachineToReturn = AssetList.Where(x => x.MachineType == mType).ToList();
 
             if (MachineToReturn == null)
@@ -46,9 +44,8 @@ namespace AssetManagement.API.Controllers
         }
 
         [HttpGet("AssetName/{aName}")]
-        public IActionResult GetAssetName(string aName)
-        {
-            //var AssetToReturn = AssetDataStore.Current.assets.Where(x => x.AssetName == aName).ToList();
+        public IActionResult GetMachineInfo(string aName)
+        {            
             var AssetToReturn = AssetList.Where(x => x.AssetName == aName).ToList();
             
             if (AssetToReturn == null)

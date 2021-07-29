@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Start.Model;
+using AssetManagement.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AssetManagement.API.Services;
 
 namespace AssetManagement.API.Controllers
 {
@@ -14,12 +15,23 @@ namespace AssetManagement.API.Controllers
         string filepath = @"F:\PProject\API\AssetManagement\AssetManagement.API\Controllers\Matrix.txt";
 
         CsvReader reader;
+        private readonly IMachineInfoRepository _machineInfoRepository;
+        private readonly IAssetInfoRepository _assetInfoRepository;
         public List<Asset> AssetList { get; set; }
 
-        public AssetManagementController()
+        public AssetManagementController(IMachineInfoRepository machineInfoRepository)
         {
             reader = new CsvReader(filepath);
             AssetList = reader.GetAssetsFromFile();
+            _machineInfoRepository = machineInfoRepository ??
+                throw new ArgumentNullException(nameof(machineInfoRepository)); 
+        }
+
+
+        public AssetManagementController(IAssetInfoRepository assetInfoRepository)
+        {
+            _assetInfoRepository = assetInfoRepository ??
+                throw new ArgumentNullException(nameof(assetInfoRepository));
         }
 
        
@@ -31,8 +43,8 @@ namespace AssetManagement.API.Controllers
         
         [HttpGet("MachineType/{mType}")]
         public IActionResult GetAssetInfo (string mType)
-        {           
-            var MachineToReturn = AssetList.Where(x => x.MachineType == mType).ToList();
+        {
+            var MachineToReturn = _machineInfoRepository.GetMachineToShowAssetInfo(mType);
 
             if (MachineToReturn == null)
             {
@@ -45,8 +57,8 @@ namespace AssetManagement.API.Controllers
 
         [HttpGet("AssetName/{aName}")]
         public IActionResult GetMachineInfo(string aName)
-        {            
-            var AssetToReturn = AssetList.Where(x => x.AssetName == aName).ToList();
+        {
+            var AssetToReturn = _assetInfoRepository.GetAssetsToShowAssetInfo(aName);
             
             if (AssetToReturn == null)
             {

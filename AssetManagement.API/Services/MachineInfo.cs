@@ -1,4 +1,5 @@
-﻿using AssetManagement.API.Models;
+﻿using AssetManagement.API.Controllers;
+using AssetManagement.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,18 @@ namespace AssetManagement.API.Services
 {
     public class MachineInfo : IMachineInfoRepository
     {
-        public List<Asset> AssetList { get; set; }
+        string filepath = @"F:\PProject\API\AssetManagement\AssetManagement.API\Controllers\Matrix.txt";
+
+        CsvReader reader;
         
+        public List<Asset> AssetList { get; set; }
+
+        public MachineInfo()
+        {
+            reader = new CsvReader(filepath);
+            AssetList = reader.GetAssetsFromFile();
+        }
+
         // Get all machine types
         public IEnumerable<string> GetMachineTypes()
         {

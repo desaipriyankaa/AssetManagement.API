@@ -4,6 +4,7 @@ using Xunit;
 using AssetManagement.API.Models;
 using AssetManagement.API.Controllers;
 using System.Linq;
+using AssetManagement.API.Services;
 
 namespace AssetsManagement.Tests
 {
@@ -14,12 +15,14 @@ namespace AssetsManagement.Tests
         {
             // Arrange
             string mType = "C300";
-            AssetManagementController controller = new AssetManagementController();
-            var expected = controller.AssetList.Where(x => x.MachineType == mType).ToList();
+            var assetInfo = new AssetInfo();
+            var Csv = new CsvReader();
+
+            var expected = Csv.AssetsList;
 
 
             // Act
-            var actual = controller.GetAssetInfo(mType);
+            var actual = assetInfo.GetAssetNames();
 
 
             // Assert

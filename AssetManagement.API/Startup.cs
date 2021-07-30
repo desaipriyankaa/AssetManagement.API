@@ -1,3 +1,4 @@
+using AssetManagement.API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -27,10 +28,9 @@ namespace AssetManagement.API
         {
             
             services.AddMvc(options => options.EnableEndpointRouting = false);
-            //services.AddMvc().AddMvcOptions(o =>
-            //{
-            //    o.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter());
-            //});
+            
+            services.AddScoped<IMachineInfoRepository, MachineInfo>();
+            services.AddScoped<IAssetInfoRepository, AssetInfo>();
 
             services.AddSwaggerGen(setupAction =>
             {

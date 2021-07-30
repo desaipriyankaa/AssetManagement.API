@@ -4,9 +4,11 @@ using System.IO;
 
 namespace AssetManagement.API.Controllers
 {
-    class CsvReader
+    public class CsvReader
     {
         private string _csvFilePath;
+        public List<Asset> AssetsList;
+
 
         public CsvReader(string csvFilepath)
         {
@@ -15,7 +17,7 @@ namespace AssetManagement.API.Controllers
 
         public List<Asset> GetAssetsFromFile()
         {
-            var AssetsList = new List<Asset>();
+            AssetsList = new List<Asset>();
             using (StreamReader reader = new StreamReader(_csvFilePath))
             {
                 string csvLine;

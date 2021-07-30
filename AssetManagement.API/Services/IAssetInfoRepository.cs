@@ -8,6 +8,8 @@ namespace AssetManagement.API.Services
 {
     public interface IAssetInfoRepository
     {
+        public IEnumerable<string> GetAssetNames();
         public IEnumerable<Asset> GetAssetsToShowAssetInfo(string aName);
+        public IEnumerable<string> GetLatestSeries();
     }
 }

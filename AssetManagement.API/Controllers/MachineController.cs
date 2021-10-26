@@ -1,4 +1,4 @@
-﻿using AssetManagement.API.Services;
+﻿using AssetManagement.Services.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,15 @@ namespace AssetManagement.API.Controllers
 {
     public class MachineController : Controller
     {
-        private Machine_Management_Service _machineInfo = new Machine_Management_Service();
+
+        IAssetRepo repo = new CsvRepo();
+
+        Machine_Management_Service _machineInfo;
+
+        public MachineController()
+        {
+            _machineInfo = new Machine_Management_Service(repo);
+        }
         
 
         [HttpGet("GetAllMachineTypes")]

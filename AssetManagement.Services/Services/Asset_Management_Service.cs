@@ -1,33 +1,27 @@
-﻿using AssetManagement.API.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using AssetManagement.API.Controllers;
+using AssetManagement.Services.Models;
 
-namespace AssetManagement.API.Services
+namespace AssetManagement.Services.Services
 {
     public class Asset_Management_Service
     {
-        string filepath = @"D:\Projects\Asset\AssetManagement.Services\Data\Matrix.txt";
-
-        CsvReader reader;
-
-        public List<Asset> AssetList { get; set; }
-
-        public Asset_Management_Service()
+        readonly IAssetRepo _repo;
+               
+        public Asset_Management_Service(IAssetRepo repo)
         {
-            reader = new CsvReader(filepath);
-            AssetList = reader.GetAssetsFromFile();
+            _repo = repo;
         }
 
         public IEnumerable<string> GetAssetNames()
         {
-            return AssetList.Select(x => x.AssetName).ToHashSet();
+            return _repo.ReadAssets().Select(x => x.AssetName).ToHashSet();
         }
 
         // Get Asset Info by taking asset input from user
         public IEnumerable<Asset> GetAssetsToShowAssetInfo(string aName)
         {
-           return AssetList.Where(x => x.AssetName == aName).ToList<Asset>();
+            return _repo.ReadAssets().Where(x => x.AssetName == aName).ToList<Asset>();
         }
 
         public IEnumerable<string> GetLatestSeries()
@@ -35,7 +29,7 @@ namespace AssetManagement.API.Services
             var result = new List<string>();
             // Find out all latest asset
 
-            var newSeries = AssetList.OrderByDescending(x => x.SeriesName).
+            var newSeries = _repo.ReadAssets().OrderByDescending(x => x.SeriesName).
                 ThenBy(x => x.AssetName).
                 GroupBy(x => x.AssetName).
                 Select(g => g.First()).ToList();
@@ -43,7 +37,7 @@ namespace AssetManagement.API.Services
 
             // remaining old series
 
-            var remain_old_assets = AssetList.Except(newSeries).ToList();
+            var remain_old_assets = _repo.ReadAssets().Except(newSeries).ToList();
 
 
 

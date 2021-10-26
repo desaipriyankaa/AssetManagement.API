@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 //namespace Start.Model
-namespace AssetManagement.API.Models
+namespace AssetManagement.Services.Models
 {
     public class Asset
     {

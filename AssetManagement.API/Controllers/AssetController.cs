@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using AssetManagement.API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AssetManagement.API.Services;
+using AssetManagement.Services.Services;
 
 namespace AssetManagement.API.Controllers
 {
@@ -12,10 +11,14 @@ namespace AssetManagement.API.Controllers
     [Route("api/assets")]
     public class AssetController : ControllerBase
     {
+        IAssetRepo repo = new CsvRepo();
 
-        private Asset_Management_Service _assetInfo = new Asset_Management_Service();
+        Asset_Management_Service _assetInfo;
 
-        
+        public AssetController()
+        {
+            _assetInfo = new Asset_Management_Service(repo);
+        }
 
         [HttpGet("GetAllAssetNames")]
         public IActionResult GetAllAssetNames()

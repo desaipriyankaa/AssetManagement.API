@@ -29,8 +29,6 @@ namespace AssetManagement.API
             
             services.AddMvc(options => options.EnableEndpointRouting = false);
             
-            services.AddScoped<IMachineInfoRepository, MachineInfo>();
-            services.AddScoped<IAssetInfoRepository, AssetInfo>();
 
             services.AddSwaggerGen(setupAction =>
             {

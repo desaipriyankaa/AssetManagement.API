@@ -11,29 +11,23 @@ namespace AssetManagement.API.Controllers
     [ApiController]
     [Route("api/assets")]
     public class AssetController : ControllerBase
-    {       
-        
-        private readonly IAssetInfoRepository _assetInfoRepository;
+    {
+
+        private Asset_Management_Service _assetInfo = new Asset_Management_Service();
 
         
-        public AssetController(IAssetInfoRepository assetInfoRepository)
-        {
-            _assetInfoRepository = assetInfoRepository ??
-                throw new ArgumentNullException(nameof(assetInfoRepository));
-        }
-
 
         [HttpGet("GetAllAssetNames")]
         public IActionResult GetAllAssetNames()
         {
-            return Ok(_assetInfoRepository.GetAssetNames());
+            return Ok(_assetInfo.GetAssetNames());
         }
 
 
         [HttpGet("AssetName/{aName}")]
         public IActionResult GetMachineInfo(string aName)
         {
-            var AssetToReturn = _assetInfoRepository.GetAssetsToShowAssetInfo(aName);
+            var AssetToReturn = _assetInfo.GetAssetsToShowAssetInfo(aName);
             
             if (AssetToReturn == null)
             {
@@ -48,7 +42,7 @@ namespace AssetManagement.API.Controllers
         [HttpGet("LatestSeries")]
         public IActionResult getLatestSeries()
         {
-            var result = _assetInfoRepository.GetLatestSeries();
+            var result = _assetInfo.GetLatestSeries();
            
             return Ok(result.ToHashSet());
         }

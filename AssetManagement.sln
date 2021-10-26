@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetManagement.API", "AssetManagement.API\AssetManagement.API.csproj", "{A2756C11-F946-4486-B3EC-FDADD8970AC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssetsManagement.Tests", "AssetsManagement.Tests\AssetsManagement.Tests.csproj", "{CCD65E39-6869-456A-ABFB-28026DF946D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetsManagement.Tests", "AssetsManagement.Tests\AssetsManagement.Tests.csproj", "{CCD65E39-6869-456A-ABFB-28026DF946D0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AssetManagement.Services", "AssetManagement.Services\AssetManagement.Services.csproj", "{CFDC9AB5-EC22-4FC7-91FD-3074F5147E36}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{CCD65E39-6869-456A-ABFB-28026DF946D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCD65E39-6869-456A-ABFB-28026DF946D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCD65E39-6869-456A-ABFB-28026DF946D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFDC9AB5-EC22-4FC7-91FD-3074F5147E36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFDC9AB5-EC22-4FC7-91FD-3074F5147E36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFDC9AB5-EC22-4FC7-91FD-3074F5147E36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFDC9AB5-EC22-4FC7-91FD-3074F5147E36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

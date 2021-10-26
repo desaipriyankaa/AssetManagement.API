@@ -9,22 +9,19 @@ namespace AssetManagement.API.Controllers
 {
     public class MachineController : Controller
     {
-        private readonly IMachineInfoRepository _machineInfoRepository;
-        public MachineController(IMachineInfoRepository machineInfoRepository)
-        {
-            _machineInfoRepository = machineInfoRepository ??
-                throw new ArgumentNullException(nameof(machineInfoRepository));
-        }
+        private Machine_Management_Service _machineInfo = new Machine_Management_Service();
+        
+
         [HttpGet("GetAllMachineTypes")]
         public IActionResult GetAllMachineTypes()
         {
-            return Ok(_machineInfoRepository.GetMachineTypes());
+            return Ok(_machineInfo.GetMachineTypes());
         }
 
         [HttpGet("MachineType/{mType}")]
         public IActionResult GetAssetInfo(string mType)
         {
-            var MachineToReturn = _machineInfoRepository.GetMachineToShowAssetInfo(mType);
+            var MachineToReturn = _machineInfo.GetMachineToShowAssetInfo(mType);
 
             if (MachineToReturn == null)
             {

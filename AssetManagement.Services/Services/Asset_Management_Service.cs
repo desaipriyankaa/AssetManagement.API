@@ -1,21 +1,19 @@
-﻿using AssetManagement.API.Controllers;
-using AssetManagement.API.Models;
-using System;
+﻿using AssetManagement.API.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using AssetManagement.API.Controllers;
 
 namespace AssetManagement.API.Services
 {
-    public class AssetInfo : IAssetInfoRepository
+    public class Asset_Management_Service
     {
-        string filepath = @"F:\PProject\API\AssetManagement\AssetManagement.API\Controllers\Matrix.txt";
+        string filepath = @"D:\Projects\Asset\AssetManagement.Services\Data\Matrix.txt";
 
         CsvReader reader;
 
         public List<Asset> AssetList { get; set; }
 
-        public AssetInfo()
+        public Asset_Management_Service()
         {
             reader = new CsvReader(filepath);
             AssetList = reader.GetAssetsFromFile();

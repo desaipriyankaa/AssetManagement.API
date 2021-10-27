@@ -24,6 +24,11 @@ namespace AssetManagement.Services.Services
             return _repo.ReadAssets().Where(x => x.AssetName == aName).ToList<Asset>();
         }
 
+        public IEnumerable<Asset> AddAsset(string mType, string aName, string sNumber)
+        {
+            return _repo.CreateAsset(mType,aName,sNumber).Where(x=>x.MachineType==mType).Where(x => x.AssetName == aName).Where(x=>x.SeriesName==sNumber).ToList<Asset>();
+        }
+
         public IEnumerable<string> GetLatestSeries()
         {
             var result = new List<string>();

@@ -15,6 +15,7 @@ namespace AssetManagement.API.Controllers
 
         Asset_Management_Service _assetInfo;
 
+        // Constructor
         public AssetController()
         {
             _assetInfo = new Asset_Management_Service(repo);
@@ -41,6 +42,11 @@ namespace AssetManagement.API.Controllers
 
         }
 
+        [HttpPost("Create Asset/{MachineType},{AssetName},{SeriesNumber}")]
+        public IActionResult AddAssetData(string MachineType , string AssetName, string SeriesNumber)
+        {
+             return Ok( _assetInfo.AddAsset(MachineType, AssetName, SeriesNumber));
+        }
 
         [HttpGet("LatestSeries")]
         public IActionResult getLatestSeries()

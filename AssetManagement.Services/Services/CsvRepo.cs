@@ -27,6 +27,20 @@ namespace AssetManagement.Services.Services
             }
             return AssetsList;
         }
+
+        public List<Asset> CreateAsset(string machineType, string assetName,string seriesName)
+        {
+            AssetsList = new List<Asset>();
+            using (StreamWriter writer = new StreamWriter(_filePath,true))
+            {
+                    Asset asset = new Asset() {MachineType=machineType,AssetName=assetName,SeriesName=seriesName};
+                AssetsList.Add(asset);
+                string str = $"{asset.MachineType},{asset.AssetName},{asset.SeriesName}";
+                writer.WriteLine(str);
+                writer.Close();
+            }
+            return AssetsList;
+        }
     }
 }
 
